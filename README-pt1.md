@@ -40,3 +40,5 @@ Example: `hashMod('ABC')` in a hash table with 10 buckets would return
 3050570844 modulo 10, or `4`.
 
 Read the specs in `test/hash-table-pt1-spec.js` for more details.
+
+Or recapitulate everything else about hash tables.
