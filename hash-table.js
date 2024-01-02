@@ -23,21 +23,75 @@ class HashTable {
   }
 
   hashMod(key) {
-    const hashModVariable = this.hash(key) % this.capacity;
+    const index = this.hash(key) % this.capacity;
 
-    return hashModVariable;
+    return index;
   }
 
   insertNoCollisions(key, value) {
-    // Your code here
+    const positionIndex = this.hashMod(key);
+
+    if (this.data[positionIndex]) {
+      throw new Error("hash collision or same key/value pair already exists!");
+    }
+
+    const dataValue = new KeyValuePair(key, value);
+    this.data[positionIndex] = dataValue;
+    this.count++;
   }
 
   insertWithHashCollisions(key, value) {
-    // Your code here
+    const dataValue = new KeyValuePair(key, value);
+
+    const positionIndex = this.hashMod(key);
+
+    if (this.data[positionIndex]) {
+      dataValue.next = this.data[positionIndex];
+      this.data[positionIndex] = dataValue;
+    } else {
+      this.data[positionIndex] = dataValue;
+    }
+    this.count++;
   }
 
   insert(key, value) {
-    // Your code here
+    const newDataValue = new KeyValuePair(key, value);
+    const positionIndex = this.hashMod(key);
+
+    if (!this.data[positionIndex]) {
+      this.data[positionIndex] = newDataValue;
+      this.count++;
+      return;
+    }
+
+    if (
+      this.data[positionIndex].key !== newDataValue.key &&
+      !this.data[positionIndex].next
+    ) {
+      newDataValue.next = this.data[positionIndex];
+      this.data[positionIndex] = newDataValue;
+      this.count++;
+      return;
+    }
+
+    if (this.data[positionIndex].key === newDataValue.key) {
+      newDataValue.next = this.data[positionIndex].next;
+      this.data[positionIndex] = newDataValue;
+    }
+
+    if (this.data[positionIndex].next) {
+      let current = this.data[positionIndex];
+
+      while (current) {
+        let next = current.next;
+
+        if (next?.key === newDataValue.key) {
+          newDataValue.next = next.next;
+          current.next = newDataValue;
+        }
+        current = current.next;
+      }
+    }
   }
 }
 

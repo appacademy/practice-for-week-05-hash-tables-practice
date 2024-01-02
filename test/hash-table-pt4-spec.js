@@ -1,20 +1,15 @@
-const { expect } = require('chai');
+const { expect } = require("chai");
 
-const HashTable = require('../hash-table.js');
+const HashTable = require("../hash-table.js");
 
-
-describe('Hash table complete insert method', () => {
-
+describe("Hash table complete insert method", () => {
   let hashTable;
 
   beforeEach(function () {
-
     hashTable = new HashTable(2);
-
   });
 
-  it('insert handles hash collisions AND updates values for same key inserts', () => {
-
+  it("insert handles hash collisions AND updates values for same key inserts", () => {
     hashTable.insert("key-1", "val-1");
     hashTable.insert("key-2", "val-2");
     hashTable.insert("key-3", "val-3");
@@ -36,7 +31,5 @@ describe('Hash table complete insert method', () => {
 
     expect(pairC.key).to.equal("key-3");
     expect(pairC.value).to.equal("val-3");
-
   });
-
 });
