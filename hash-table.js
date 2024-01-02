@@ -1,5 +1,5 @@
-const sha256 = require('js-sha256');
-
+const sha256 = require("js-sha256");
+const { hexadecimalToDecimal } = require("./helpers/hexadecimal-to-decimal");
 class KeyValuePair {
   constructor(key, value) {
     this.key = key;
@@ -9,17 +9,23 @@ class KeyValuePair {
 }
 
 class HashTable {
-
   constructor(numBuckets = 4) {
     // Your code here
+    this.data = new Array(numBuckets).fill(null);
+    this.count = 0;
+    this.capacity = numBuckets;
   }
 
   hash(key) {
-    // Your code here
+    const hex = sha256(key).slice(0, 8);
+
+    return hexadecimalToDecimal(hex);
   }
 
   hashMod(key) {
-    // Your code here
+    const hashModVariable = this.hash(key) % this.capacity;
+
+    return hashModVariable;
   }
 
   insertNoCollisions(key, value) {
@@ -33,8 +39,6 @@ class HashTable {
   insert(key, value) {
     // Your code here
   }
-
 }
-
 
 module.exports = HashTable;
